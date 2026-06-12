@@ -76,15 +76,10 @@
 
       /* --- HELPER STYLES --- */
       .container {
-        width: 105%;
+        width: 100%;
         max-width: 1280px;
         margin: 0 auto;
         padding: 0 24px;
-      }
-      @media (min-width: 768px) {
-        .container {
-          width: 100%;
-        }
       }
 
       button, .btn {
@@ -318,6 +313,15 @@
         display: block;
       }
 
+      @media (max-width: 1023px) {
+        .nav-links {
+          display: none;
+        }
+        .hamburger {
+          display: block;
+        }
+      }
+
       /* Overlay Mobile Menu */
       .mobile-menu {
         position: fixed;
@@ -325,7 +329,7 @@
         background: rgba(13, 13, 13, 0.98);
         z-index: 998;
         display: flex;
-        flex-col: column;
+        flex-direction: column;
         justify-content: center;
         padding: 40px;
         transform: translateX(100%);
@@ -780,6 +784,15 @@
         padding: 16px;
         border-bottom: 1px solid #222;
         transition: background-color 0.3s ease;
+      }
+
+      @media (max-width: 480px) {
+        .hours-row {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+          padding: 16px 12px;
+        }
       }
 
       .hours-row:hover {
