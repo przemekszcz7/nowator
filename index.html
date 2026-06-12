@@ -4,16 +4,2508 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nowator - Usługi Wielobranżowe | Stopnica</title>
+    
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="https://i.ibb.co/JWYXfG14/665993853-122126015019155709-4455479750480542122-n.jpg" />
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;605;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;605;700&display=swap" rel="stylesheet" />
+
+    <style>
+      /* --- COLOR PALETTE & VARIABLES --- */
+      :root {
+        --black: #0d0d0d;
+        --black-mid: #111111;
+        --black-soft: #1a1a1a;
+        --red: #cc1f1f;
+        --red-dark: #991515;
+        --red-light: #e63333;
+        --white: #ffffff;
+        --off-white: #f4f4f4;
+        --gray: #888888;
+        --gray-light: #dddddd;
+        --font-sans: 'Inter', sans-serif;
+        --font-condensed: 'Outfit', sans-serif;
+      }
+
+      /* --- GLOBAL BASE STYLES --- */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        background-color: var(--black);
+        color: var(--white);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      body {
+        min-height: 100vh;
+        line-height: 1.7;
+        font-size: clamp(0.9rem, 2.2vw, 1.05rem);
+      }
+
+      /* Heading Typography */
+      h1, h2, h3, h4, h5, .font-heading {
+        font-family: var(--font-condensed);
+        text-transform: uppercase;
+        letter-spacing: -0.01em;
+        line-height: 1.1;
+      }
+
+      /* --- CUSTOM SCROLLBAR --- */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--black);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--red);
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--red-light);
+      }
+
+      /* --- HELPER STYLES --- */
+      .container {
+        width: 105%;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      @media (min-width: 768px) {
+        .container {
+          width: 100%;
+        }
+      }
+
+      button, .btn {
+        font-family: var(--font-condensed);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 16px 36px;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        cursor: pointer;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-decoration: none;
+        outline: none;
+      }
+
+      /* Strict sharp industrial style - No border-radius! */
+      .sharp-corner, button, .btn, .card, img, select, input {
+        border-radius: 0 !important;
+      }
+
+      /* Underline and rules */
+      .red-rule-thick {
+        width: 100%;
+        height: 6px;
+        background-color: var(--red);
+      }
+
+      .red-rule-thin {
+        width: 100%;
+        height: 4px;
+        background-color: var(--red);
+      }
+
+      .divider {
+        width: 64px;
+        height: 4px;
+        background-color: var(--red);
+        margin: 16px 0;
+      }
+
+      /* Outline watermarked text */
+      .outline-text {
+        font-family: var(--font-condensed);
+        font-weight: 900;
+        -webkit-text-stroke: 2px rgba(204, 31, 31, 0.18);
+        color: transparent;
+        transition: -webkit-text-stroke 0.3s ease;
+      }
+      .outline-text:hover {
+        -webkit-text-stroke: 2px rgba(204, 31, 31, 0.5);
+      }
+
+      /* --- ENTRANCE ANIMATIONS --- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal-left {
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal-right {
+        opacity: 0;
+        transform: translateX(50px);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.active, .reveal-left.active, .reveal-right.active {
+        opacity: 1;
+        transform: translate(0);
+      }
+
+      /* Specific animated fast bars */
+      @keyframes slideInLeft {
+        from { transform: scaleX(0); }
+        to { transform: scaleX(1); }
+      }
+      .slide-line-trigger {
+        transform-origin: left;
+        animation: slideInLeft 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      /* --- NAVBAR --- */
+      #top-accent-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background-color: var(--red);
+        z-index: 1000;
+      }
+
+      .navbar {
+        position: fixed;
+        top: 4px;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        padding: 24px 0;
+        transition: all 0.3s ease;
+        background: transparent;
+      }
+
+      .navbar.scrolled {
+        background: rgba(13, 13, 13, 0.96);
+        backdrop-filter: blur(8px);
+        padding: 14px 0;
+        border-b: 1px solid var(--red);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      }
+
+      .navbar .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: var(--white);
+      }
+
+      .brand-dot {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .brand-dot-1 {
+        width: 6px;
+        height: 24px;
+        background-color: var(--red);
+      }
+      .brand-dot-2 {
+        width: 4px;
+        height: 12px;
+        background-color: var(--red);
+      }
+
+      .brand-name {
+        font-family: var(--font-condensed);
+        font-weight: 900;
+        font-size: 1.8rem;
+        letter-spacing: 0.05em;
+        line-height: 1;
+      }
+      .brand-suffix {
+        font-family: sans-serif;
+        font-weight: bold;
+        font-size: 0.75rem;
+        color: var(--red);
+        letter-spacing: 0.15em;
+        margin-left: 4px;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+
+      .nav-link {
+        font-family: var(--font-condensed);
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--gray-light);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        text-decoration: none;
+        position: relative;
+        padding: 4px 0;
+        transition: color 0.3s ease;
+      }
+
+      .nav-link:hover {
+        color: var(--red);
+      }
+
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--red);
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      .nav-btn {
+        background-color: var(--red);
+        color: var(--white);
+        font-size: 0.8rem;
+        padding: 10px 20px;
+        font-weight: 700;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: background-color 0.2s ease;
+      }
+      .nav-btn:hover {
+        background-color: var(--red-light);
+      }
+
+      /* Mobile Navigation Hamburger */
+      .hamburger {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--white);
+        padding: 4px;
+      }
+
+      .hamburger svg {
+        width: 28px;
+        height: 28px;
+        display: block;
+      }
+
+      /* Overlay Mobile Menu */
+      .mobile-menu {
+        position: fixed;
+        inset: 0;
+        background: rgba(13, 13, 13, 0.98);
+        z-index: 998;
+        display: flex;
+        flex-col: column;
+        justify-content: center;
+        padding: 40px;
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .mobile-menu.open {
+        transform: translateX(0);
+      }
+
+      .mobile-menu-content {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        margin-top: 60px;
+      }
+
+      .mobile-label {
+        font-family: var(--font-condensed);
+        font-size: 0.8rem;
+        letter-spacing: 0.2em;
+        color: var(--red);
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .mobile-menu-links {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .mobile-menu-link {
+        font-family: var(--font-condensed);
+        font-weight: 900;
+        font-size: 2.5rem;
+        color: var(--white);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .mobile-menu-link span {
+        color: #333333;
+        font-size: 1.5rem;
+      }
+
+      .mobile-menu-link:hover {
+        color: var(--red);
+      }
+
+      .mobile-footer {
+        margin-top: auto;
+        border-top: 1px solid #222;
+        padding-top: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      /* --- SECTION LABELS --- */
+      .section-label {
+        font-family: var(--font-condensed);
+        font-weight: 800;
+        font-size: 0.85rem;
+        letter-spacing: 0.2em;
+        color: var(--red);
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      /* --- HERO SECTION --- */
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background-color: var(--black);
+        overflow: hidden;
+        padding-top: 100px;
+      }
+
+      /* Red bar under header, animated on load */
+      .hero-slide-bar {
+        position: absolute;
+        top: 120px;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background-color: var(--red);
+        z-index: 10;
+      }
+
+      .hero-bg-accent {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.04;
+        font-family: var(--font-condensed);
+        font-weight: 900;
+        font-size: 60vw;
+        color: var(--red);
+        line-height: none;
+        user-select: none;
+      }
+
+      .hero .container {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      @media (min-width: 1024px) {
+        .hero .container {
+          grid-template-columns: 7fr 3fr;
+        }
+      }
+
+      .hero-content {
+        max-width: 800px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .hero-badge-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .hero-badge {
+        background-color: var(--red);
+        color: var(--white);
+        padding: 4px 12px;
+        font-family: var(--font-condensed);
+        font-weight: 900;
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      .hero-badge-sub {
+        font-size: 0.75rem;
+        font-family: monospace;
+        color: var(--gray);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .hero-title {
+        font-size: clamp(3.2rem, 7.5vw, 6.5rem);
+        font-weight: 900;
+        color: var(--white);
+        margin-bottom: 6px;
+      }
+
+      .hero-subtitle {
+        font-size: clamp(1.6rem, 3.8vw, 3rem);
+        font-weight: 800;
+        color: var(--red);
+        letter-spacing: 0.02em;
+        margin-bottom: 24px;
+      }
+
+      .hero-description {
+        font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+        color: var(--gray-light);
+        max-width: 650px;
+        margin-bottom: 36px;
+        line-height: 1.6;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 48px;
+      }
+
+      .btn-primary {
+        background-color: var(--red);
+        color: var(--white);
+      }
+      .btn-primary:hover {
+        background-color: var(--red-light);
+      }
+
+      .btn-outline {
+        border: 2px solid var(--white);
+        background-color: transparent;
+        color: var(--white);
+      }
+      .btn-outline:hover {
+        border-color: var(--red);
+        color: var(--red);
+      }
+
+      .hero-contact-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 32px;
+        border-top: 1px solid #222;
+        padding-top: 24px;
+      }
+
+      .contact-widget {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .widget-icon {
+        color: var(--red);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .widget-title {
+        display: block;
+        font-size: 0.65rem;
+        color: var(--gray);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+      }
+
+      .widget-value {
+        font-family: var(--font-condensed);
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: var(--white);
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      .widget-value.email {
+        font-family: var(--font-sans);
+        font-size: 0.9rem;
+      }
+
+      .widget-value:hover {
+        color: var(--red);
+      }
+
+      /* Stacked outline sidebar on hero */
+      .hero-sidebar {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+      }
+
+      @media (min-width: 1024px) {
+        .hero-sidebar {
+          display: flex;
+        }
+      }
+
+      .sidebar-watermark {
+        writing-mode: vertical-rl;
+        text-align: right;
+        font-size: clamp(4rem, 6vw, 7rem);
+        line-height: 0.9;
+      }
+
+      /* --- O FIRMIE (ABOUT) SECTION --- */
+      .about {
+        background-color: var(--white);
+        color: var(--black);
+        padding: 100px 0;
+        position: relative;
+      }
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 48px;
+        align-items: start;
+      }
+
+      @media (min-width: 1024px) {
+        .about-grid {
+          grid-template-columns: 5fr 7fr;
+          gap: 64px;
+        }
+      }
+
+      /* Stat area stacked with red left border */
+      .about-stats {
+        border-left: 8px solid var(--red);
+        background-color: var(--off-white);
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+      }
+
+      .stat-card {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .stat-number {
+        font-family: var(--font-condensed);
+        font-weight: 900;
+        font-size: clamp(3.5rem, 5vw, 4.5rem);
+        line-height: 1;
+        color: var(--black);
+        transition: color 0.3s ease;
+      }
+      .stat-card:hover .stat-number {
+        color: var(--red);
+      }
+
+      .stat-subtitle {
+        font-family: var(--font-condensed);
+        font-weight: 800;
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+        color: var(--red);
+        margin-top: 4px;
+        text-transform: uppercase;
+      }
+
+      .stat-desc {
+        color: #555555;
+        font-size: 0.9rem;
+        margin-top: 8px;
+      }
+
+      .stat-divider {
+        height: 1px;
+        background-color: #dddddd;
+        width: 100%;
+      }
+
+      /* About text side */
+      .about-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .about-title {
+        font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+        font-weight: 900;
+        color: var(--black);
+        margin-bottom: 24px;
+      }
+
+      .about-lead {
+        font-size: 1.15rem;
+        color: #222222;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      .about-body {
+        font-size: 0.95rem;
+        color: #444444;
+        margin-bottom: 32px;
+      }
+
+      .about-features {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      @media (min-width: 640px) {
+        .about-features {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .feature-box {
+        border: 1px solid var(--gray-light);
+        padding: 24px;
+        background-color: var(--off-white);
+        display: flex;
+        gap: 16px;
+      }
+
+      .feature-icon {
+        color: var(--red);
+        flex-shrink: 0;
+      }
+
+      .feature-title {
+        font-family: var(--font-condensed);
+        font-weight: 800;
+        font-size: 1rem;
+        color: var(--black);
+        margin-bottom: 4px;
+        text-transform: uppercase;
+      }
+
+      .feature-text {
+        font-size: 0.8rem;
+        color: #666666;
+        line-height: 1.5;
+      }
+
+      /* --- GODZINY OTWARCIA (HOURS) SECTION --- */
+      .hours {
+        background-color: var(--black-mid);
+        padding: 100px 0;
+        position: relative;
+      }
+
+      .hours-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 48px;
+        align-items: center;
+      }
+
+      @media (min-width: 1024px) {
+        .hours-grid {
+          grid-template-columns: 7fr 5fr;
+        }
+      }
+
+      .hours-title {
+        font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+        font-weight: 900;
+        color: var(--white);
+        margin-bottom: 32px;
+      }
+
+      .hours-list {
+        border-top: 2px solid var(--red);
+        margin-top: 24px;
+      }
+
+      .hours-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+        border-bottom: 1px solid #222;
+        transition: background-color 0.3s ease;
+      }
+
+      .hours-row:hover {
+        background-color: rgba(255, 255, 255, 0.02);
+      }
+
+      .hours-day {
+        font-family: var(--font-condensed);
+        font-weight: 700;
+        font-size: 1.15rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .hours-term {
+        font-family: monospace;
+        color: var(--red);
+        background: #080808;
+        border: 1px solid #1f1f1f;
+        padding: 4px 12px;
+        font-size: 0.85rem;
+        font-weight: bold;
+        letter-spacing: 0.05em;
+      }
+
+      /* Sunday styling rules */
+      .hours-row.niedziela {
+        background-color: rgba(204, 31, 31, 0.08);
+        border-bottom: 1px solid rgba(204, 31, 31, 0.3);
+      }
+
+      .hours-row.niedziela .hours-term {
+        text-decoration: line-through;
+        color: var(--red-light);
+        background: transparent;
+        border: none;
+        font-family: var(--font-condensed);
+        font-size: 1.1rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .hours-notice {
+        margin-top: 24px;
+        font-size: 0.8rem;
+        color: var(--gray);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .hours-bullet-ping {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: var(--red);
+        position: relative;
+      }
+
+      .hours-bullet-ping::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background-color: var(--red);
+        animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes ping {
+        75%, 100% {
+          transform: scale(2.5);
+          opacity: 0;
+        }
+      }
+
+      /* Info Widget on the right side */
+      .hours-info-card {
+        border: 1px solid #222;
+        background-color: var(--black-soft);
+        padding: 40px;
+        height: 100%;
+        min-height: 280px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+      }
+
+      .hours-info-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, transparent 50%, var(--red) 50%);
+      }
+
+      .hours-info-card h4 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        margin-bottom: 16px;
+      }
+
+      .hours-info-text {
+        font-size: 0.9rem;
+        color: var(--gray-light);
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+
+      .local-stamp {
+        background-color: var(--red);
+        padding: 16px 24px;
+        display: inline-block;
+        align-self: flex-start;
+      }
+
+      .local-stamp-title {
+        font-family: var(--font-condensed);
+        font-weight: 900;
+        font-size: 1.5rem;
+        line-height: 1;
+        letter-spacing: 0.05em;
+      }
+
+      .local-stamp-sub {
+        font-size: 0.65rem;
+        font-family: monospace;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        display: block;
+        margin-top: 4px;
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      /* --- OFERTY (LISTINGS) SECTION --- */
+      .offers {
+        background-color: var(--white);
+        color: var(--black);
+        padding: 100px 0;
+        position: relative;
+      }
+
+      .offers-head {
+        margin-bottom: 64px;
+      }
+
+      .offers-title {
+        font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+        font-weight: 900;
+        color: var(--black);
+      }
+
+      .offers-list {
+        display: flex;
+        flex-direction: column;
+        gap: 60px;
+      }
+
+      /* Responsive Product Card Layout */
+      .offer-card {
+        background-color: var(--off-white);
+        border-left: 8px solid var(--red);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+        display: grid;
+        grid-template-columns: 1fr;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+      }
+
+      @media (min-width: 1024px) {
+        .offer-card {
+          grid-template-columns: 5fr 7fr;
+        }
+      }
+
+      .offer-visual {
+        position: relative;
+        min-height: 350px;
+        background-color: var(--black);
+        overflow: hidden;
+      }
+
+      .offer-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+
+      .offer-card:hover .offer-img {
+        transform: scale(1.04);
+      }
+
+      .offer-badge {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: var(--red);
+        color: var(--white);
+        padding: 8px 16px;
+        font-family: var(--font-condensed);
+        font-weight: 900;
+        font-size: 0.85rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        z-index: 5;
+      }
+
+      .offer-details {
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      @media (min-width: 640px) {
+        .offer-details {
+          padding: 48px;
+        }
+      }
+
+      .offer-top-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .offer-category {
+        font-family: var(--font-condensed);
+        font-weight: 800;
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        color: var(--gray);
+        text-transform: uppercase;
+      }
+
+      .offer-price {
+        background-color: var(--red);
+        color: var(--white);
+        padding: 8px 20px;
+        font-family: var(--font-condensed);
+        font-weight: 900;
+        font-size: 1.5rem;
+        letter-spacing: 0.05em;
+        line-height: 1;
+      }
+
+      .offer-price.variable {
+        background-color: var(--black);
+        border: 1px solid var(--red);
+        color: var(--red);
+        font-size: 1.15rem;
+        padding: 8px 16px;
+      }
+
+      .offer-name {
+        font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+        font-weight: 905;
+        color: var(--black);
+        margin-bottom: 16px;
+      }
+
+      .offer-subname {
+        font-family: var(--font-condensed);
+        font-weight: 700;
+        font-size: 1.15rem;
+        color: var(--red);
+        text-transform: uppercase;
+        margin-top: -12px;
+        margin-bottom: 16px;
+        letter-spacing: 0.05em;
+      }
+
+      .offer-description {
+        font-size: 0.95rem;
+        color: #555555;
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+
+      /* Specification box blocks */
+      .offer-specs-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        background-color: rgba(0, 0, 0, 0.02);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 20px;
+        margin-bottom: 24px;
+      }
+
+      @media (min-width: 640px) {
+        .offer-specs-grid {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+
+      .spec-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.8rem;
+        color: #444444;
+      }
+
+      .spec-icon {
+        color: var(--red);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+      }
+
+      .spec-item strong {
+        color: var(--black);
+        margin-right: 4px;
+      }
+
+      /* Bullet List highlighting key points */
+      .offer-bullets {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 32px;
+      }
+
+      .bullet-item {
+        display: flex;
+        align-items: start;
+        gap: 10px;
+        font-size: 0.85rem;
+        color: #333333;
+      }
+
+      .bullet-marker {
+        width: 6px;
+        height: 6px;
+        background-color: var(--red);
+        flex-shrink: 0;
+        margin-top: 8px;
+      }
+
+      .offer-cta-btn {
+        background-color: var(--black);
+        color: var(--white);
+        font-size: 0.9rem;
+        width: 100%;
+      }
+
+      .offer-cta-btn:hover {
+        background-color: var(--red);
+        color: var(--white);
+      }
+
+      @media (min-width: 640px) {
+        .offer-cta-btn {
+          width: auto;
+        }
+      }
+
+      /* Package notice block */
+      .package-notice {
+        background: rgba(204, 31, 31, 0.05);
+        border: 1px solid rgba(204, 31, 31, 0.25);
+        padding: 16px;
+        margin-bottom: 24px;
+      }
+      .package-notice-title {
+        font-family: var(--font-condensed);
+        font-weight: 800;
+        font-size: 0.8rem;
+        letter-spacing: 0.05em;
+        color: var(--red);
+        display: block;
+        margin-bottom: 4px;
+      }
+      .package-notice-text {
+        font-size: 0.8rem;
+        color: #444444;
+      }
+
+      /* --- VANILLA IMAGE CAROUSEL (MECHANIZMY TNĄCE) --- */
+      .carousel-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        min-height: 350px;
+        background-color: #050505;
+        overflow: hidden;
+      }
+
+      .carousel-slide-wrapper {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        inset: 0;
+      }
+
+      .carousel-slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        z-index: 1;
+      }
+
+      .carousel-slide.active {
+        opacity: 1;
+        z-index: 2;
+      }
+
+      .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* Arrows specs */
+      .carousel-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(13, 13, 13, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--white);
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.3s ease;
+      }
+
+      .carousel-arrow:hover {
+        background: var(--red);
+        border-color: var(--red);
+      }
+
+      .carousel-arrow.prev {
+        left: 16px;
+      }
+
+      .carousel-arrow.next {
+        right: 16px;
+      }
+
+      /* Dot Indicators specs */
+      .carousel-dots {
+        position: absolute;
+        bottom: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        z-index: 10;
+      }
+
+      .carousel-dot {
+        width: 10px;
+        height: 10px;
+        background: rgba(255, 255, 255, 0.4);
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+
+      .carousel-dot.active {
+        background: var(--red);
+        transform: scale(1.2);
+      }
+
+      /* --- KONTAKT (CONTACT) SECTION --- */
+      .contact {
+        background-color: var(--black);
+        padding: 100px 0;
+        position: relative;
+        border-top: 1px solid #1a1a1a;
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      @media (min-width: 768px) {
+        .contact-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 32px;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .contact-grid {
+          grid-template-columns: 5fr 3fr 4fr;
+          gap: 48px;
+        }
+      }
+
+      .contact-title {
+        font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+        font-weight: 900;
+        color: var(--white);
+        margin-bottom: 40px;
+      }
+
+      .contact-list {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        margin-bottom: 40px;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .contact-icon-box {
+        background-color: var(--black-soft);
+        border: 1px solid #222;
+        color: var(--red);
+        width: 52px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .contact-item-label {
+        display: block;
+        font-family: var(--font-condensed);
+        font-weight: 800;
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        color: var(--gray);
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+
+      .contact-item-value {
+        font-size: 1.15rem;
+        color: var(--white);
+        line-height: 1.5;
+      }
+
+      .contact-item-phone {
+        font-family: var(--font-condensed);
+        font-weight: 900;
+        font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+        color: var(--red);
+        text-decoration: none;
+        letter-spacing: 0.02em;
+        transition: color 0.2s ease;
+        line-height: 1.1;
+      }
+
+      .contact-item-phone:hover {
+        color: var(--red-light);
+      }
+
+      .contact-item-email {
+        font-family: var(--font-sans);
+        font-size: 1.1rem;
+        color: var(--white);
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      .contact-item-email:hover {
+        color: var(--red);
+      }
+
+      /* Stacked Social block styles */
+      .social-label {
+        font-family: var(--font-condensed);
+        font-weight: 700;
+        font-size: 0.8rem;
+        color: var(--gray);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 12px;
+        display: block;
+      }
+
+      .social-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .social-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        font-family: var(--font-condensed);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .social-btn.facebook {
+        background-color: var(--red);
+        color: var(--white);
+      }
+      .social-btn.facebook:hover {
+        background-color: var(--red-light);
+      }
+
+      .social-btn.youtube {
+        background-color: transparent;
+        border: 2px solid var(--red-dark);
+        color: var(--white);
+      }
+      .social-btn.youtube:hover {
+        border-color: var(--red);
+        background-color: rgba(204, 31, 31, 0.05);
+      }
+
+      .social-icon-inner {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .social-symbol {
+        font-family: serif;
+        font-weight: 900;
+        font-size: 1.25rem;
+        background-color: var(--white);
+        color: var(--red);
+        width: 24px;
+        height: 24px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+      }
+
+      .youtube .social-symbol {
+        background-color: var(--red);
+        color: var(--white);
+        font-size: 0.75rem;
+      }
+
+      /* Column 2: Hours table specs */
+      .contact-hours-title {
+        font-family: var(--font-condensed);
+        font-weight: 800;
+        font-size: 0.85rem;
+        letter-spacing: 0.2em;
+        color: var(--red);
+        text-transform: uppercase;
+        margin-bottom: 24px;
+      }
+
+      .contact-hours-table {
+        display: flex;
+        flex-direction: column;
+        border-top: 1px solid #222;
+        margin-bottom: 32px;
+      }
+
+      .contact-hours-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid #222;
+        font-size: 0.85rem;
+      }
+
+      .contact-day {
+        font-family: var(--font-condensed);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--gray-light);
+      }
+
+      .contact-time {
+        color: var(--white);
+      }
+
+      .contact-hours-item.closed .contact-time {
+        color: var(--red);
+        font-weight: bold;
+      }
+
+      /* Column 3: Map specs with strict grayscale filter */
+      .map-wrapper {
+        border: 1px solid #222;
+        padding: 8px;
+        background-color: var(--black-soft);
+        position: relative;
+        height: 340px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .map-wrapper iframe {
+        width: 100%;
+        height: 100%;
+        filter: grayscale(100%) invert(92%) contrast(100%);
+        border: none;
+      }
+
+      /* --- FOOTER SECTION --- */
+      .footer {
+        background-color: #060606;
+        border-top: 1px solid #151515;
+        padding-top: 80px;
+        padding-bottom: 40px;
+        color: var(--gray-light);
+      }
+
+      .footer-main {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+      }
+
+      @media (min-width: 768px) {
+        .footer-main {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .footer-main {
+          grid-template-columns: 4fr 4fr 4fr;
+        }
+      }
+
+      .footer-brand h4 {
+        font-size: 2rem;
+        font-weight: 950;
+        color: var(--red);
+        margin-bottom: 8px;
+        letter-spacing: 0.05em;
+      }
+
+      .footer-brand p {
+        font-size: 0.9rem;
+        color: var(--gray);
+        line-height: 1.6;
+      }
+
+      .footer-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .footer-nav-title {
+        font-family: var(--font-condensed);
+        font-weight: 800;
+        font-size: 0.85rem;
+        letter-spacing: 0.15em;
+        color: var(--white);
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      .footer-links-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .footer-link-a {
+        font-family: var(--font-condensed);
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--gray);
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: 0.05em;
+        transition: color 0.2s ease;
+      }
+
+      .footer-link-a:hover {
+        color: var(--white);
+      }
+
+      .footer-contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .footer-contact-phone {
+        font-family: var(--font-condensed);
+        font-weight: 900;
+        font-size: 1.8rem;
+        color: var(--white);
+        text-decoration: none;
+        display: inline-block;
+        transition: color 0.2s ease;
+      }
+
+      .footer-contact-phone:hover {
+        color: var(--red);
+      }
+
+      .footer-contact-email {
+        font-family: var(--font-sans);
+        font-size: 0.95rem;
+        color: var(--gray);
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      .footer-contact-email:hover {
+        color: var(--white);
+      }
+
+      /* Footer Bottom */
+      .footer-bottom {
+        border-top: 1px solid #1a1a1a;
+        padding-top: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      @media (min-width: 768px) {
+        .footer-bottom {
+          flex-direction: row;
+        }
+      }
+
+      .copyright {
+        font-size: 0.75rem;
+        color: var(--gray);
+        font-family: var(--font-sans);
+      }
+
+      .credits {
+        font-size: 0.75rem;
+        color: var(--zinc-650);
+        font-family: var(--font-sans);
+      }
+    </style>
   </head>
-  <body class="bg-[#0d0d0d] text-white">
-    <div id="root"></div>
-    <script type="module" src="./src/main.tsx"></script>
+  <body>
+
+    <!-- 4PX TOP ACCENT BAR -->
+    <div id="top-accent-bar"></div>
+
+    <!-- NAVBAR HEADER -->
+    <header class="navbar" id="navbar">
+      <div class="container">
+        
+        <a href="#" class="brand-wrap" id="home-logo-link">
+          <div class="brand-dot">
+            <span class="brand-dot-1"></span>
+            <span class="brand-dot-2"></span>
+          </div>
+          <span class="brand-name">NOWATOR</span>
+          <span class="brand-suffix">PL</span>
+        </a>
+
+        <!-- Desktop Navigation Items -->
+        <nav class="nav-links">
+          <a href="#o-firmie" class="nav-link">O firmie</a>
+          <a href="#godziny" class="nav-link">Godziny</a>
+          <a href="#oferty" class="nav-link">Oferty</a>
+          <a href="#kontakt" class="nav-link">Kontakt</a>
+          
+          <a href="tel:606502642" class="nav-btn">
+            <!-- Inline phone icon -->
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            606 502 642
+          </a>
+        </nav>
+
+        <!-- Mobile Hamburg Switch -->
+        <button class="hamburger" id="hamburger-btn" aria-label="Otwórz menu mobilne">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+      </div>
+    </header>
+
+    <!-- MOBILE OVERLAY MENU -->
+    <div class="mobile-menu" id="mobile-menu">
+      
+      <!-- Close button on top-right of overlay -->
+      <button class="hamburger" id="mobile-close-btn" style="position: absolute; top: 24px; right: 24px; display: block;" aria-label="Zamknij menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="mobile-menu-content">
+        <span class="mobile-label">NAWIGACJA MOBILNA</span>
+        <div class="mobile-menu-links">
+          <a href="#o-firmie" class="mobile-menu-link" data-link><span>#</span> O firmie</a>
+          <a href="#godziny" class="mobile-menu-link" data-link><span>#</span> Godziny pracy</a>
+          <a href="#oferty" class="mobile-menu-link" data-link><span>#</span> Nasze oferty</a>
+          <a href="#kontakt" class="mobile-menu-link" data-link><span>#</span> Kontakt</a>
+        </div>
+
+        <div class="mobile-footer">
+          <span class="mobile-label">DZWOŃ TERAZ</span>
+          <a href="tel:606502642" class="contact-item-phone">606 502 642</a>
+          <span class="mobile-label" style="margin-top: 12px;">E-MAIL</span>
+          <a href="mailto:info.nowator@gmail.com" class="footer-contact-email">info.nowator@gmail.com</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. HERO SECTION -->
+    <section class="hero" id="hero">
+      
+      <!-- Barely visible stylized large raw letter layout background -->
+      <div class="hero-bg-accent">N</div>
+
+      <!-- Left animated horizontal accent bar -->
+      <div class="hero-slide-bar slide-line-trigger"></div>
+
+      <div class="container">
+        
+        <div class="hero-content">
+          
+          <div class="hero-badge-row">
+            <span class="hero-badge">STOPNICA</span>
+            <span class="hero-badge-sub">Świętokrzyskie</span>
+          </div>
+
+          <h1 class="hero-title">NOWATOR</h1>
+          <h2 class="hero-subtitle">USŁUGI WIELOBRANŻOWE</h2>
+
+          <p class="hero-description">
+            Stopnica i okolice — wykonamy to, czego potrzebujesz. Solidne i rzetelne usługi z wieloletnim doświadczeniem rzemieślniczym. Oferujemy polskie kominki, pancerne paleniska ogrodowe oraz podzespoły mechaniczne z ekspresową wysyłką w całej Polsce i Europie.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#oferty" class="btn btn-primary">Zobacz oferty</a>
+            <a href="tel:606502642" class="btn btn-outline">
+              <!-- Inline Phone Icon -->
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              Zadzwoń teraz
+            </a>
+          </div>
+
+          <!-- Bottom Contact Bar on Hero -->
+          <div class="hero-contact-row">
+            
+            <div class="contact-widget">
+              <span class="widget-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+              </span>
+              <div>
+                <span class="widget-title">Telefon</span>
+                <a href="tel:606502642" class="widget-value">+48 606 502 642</a>
+              </div>
+            </div>
+
+            <div class="contact-widget">
+              <span class="widget-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </span>
+              <div>
+                <span class="widget-title">Napisz e-mail</span>
+                <a href="mailto:info.nowator@gmail.com" class="widget-value email">info.nowator@gmail.com</a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Huge outline letters stacked watermark sidebar on right -->
+        <div class="hero-sidebar">
+          <div class="sidebar-watermark">
+            <span class="outline-text block" style="margin-bottom: 24px;">NOWATOR</span>
+            <span class="outline-text block" style="margin-bottom: 24px;">STOPNICA</span>
+            <span class="outline-text block">USŁUGI</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="red-rule-thick" style="position: absolute; bottom: 0; left: 0;"></div>
+    </section>
+
+    <!-- 2. O FIRMIE (ABOUT) SECTION -->
+    <section class="about" id="o-firmie">
+      <div class="container">
+        
+        <div class="about-grid">
+          
+          <!-- Stacked stats on left -->
+          <div class="about-stats reveal-left">
+            
+            <div class="stat-card">
+              <span class="stat-number">6 DNI</span>
+              <span class="stat-subtitle">W TYGODNIU DLA CIEBIE</span>
+              <p class="stat-desc">Działamy od poniedziałku do soboty bezpośrednio w Stopnicy. Przyjmujemy zamówienia i wysyłamy towary płynnie i rzetelnie.</p>
+            </div>
+
+            <div class="stat-divider"></div>
+
+            <div class="stat-card">
+              <span class="stat-number">1 NUMER</span>
+              <span class="stat-subtitle">606 502 642</span>
+              <p class="stat-desc">Bezpośredni kontakt telefoniczny z decyzyjnym rzemieślnikiem. Krótkie terminy uzgodnień oraz szybkie decyzje handlowe.</p>
+            </div>
+
+            <div class="stat-divider"></div>
+
+            <div class="stat-card">
+              <span class="stat-number">∞</span>
+              <span class="stat-subtitle">MOŻLIWOŚCI</span>
+              <p class="stat-desc">Zdolności realizacyjne dostosowane do niestandardowych elementów stalowych, maszynowych oraz ogrodowych według wzoru.</p>
+            </div>
+
+          </div>
+
+          <!-- Description on the right -->
+          <div class="about-text reveal-right">
+            <span class="section-label">KIM JESTEŚMY</span>
+            <h2 class="about-title">WIELOBRANŻOWA FIRMA Z DOŚWIADCZENIEM</h2>
+            <div class="divider"></div>
+
+            <p class="about-lead">
+              Nowator to dynamicznie rozwijająca się firma wielobranżowa z siedzibą w Stopnicy na terenie województwa świętokrzyskiego.
+            </p>
+
+            <p class="about-body">
+              Świadczymy specjalistyczne usługi i oferujemy doskonale wykonane produkty rzemieślnicze. Działamy rzetelnie, szybko i z pełnym zaangażowaniem. Nasz asortyment obejmuje m.in. nowoczesne kominki elektryczne niemieckiej marki Kesser, masywne geometryczne paleniska ogrodowe oraz podzespoły mechaniczne (mechanizmy tnące, świdry, noże) dedykowane polskiemu przemysłowi rolniczo-leśnemu. Wysyłamy nasze towary na terenie całej Polski oraz Europy.
+            </p>
+
+            <div class="about-features">
+              
+              <div class="feature-box">
+                <span class="feature-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </span>
+                <div>
+                  <h4 class="feature-title">SOLIDNE MATERIAŁY</h4>
+                  <p class="feature-text">Pracujemy na atestowanej stali konstrukcyjnej o grubościach dostosowanych do potężnych obciążeń mechanicznych i termicznych.</p>
+                </div>
+              </div>
+
+              <div class="feature-box">
+                <span class="feature-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                </span>
+                <div>
+                  <h4 class="feature-title">SPEDYCJA EUROPA</h4>
+                  <p class="feature-text">Posiadamy sprawdzone umowy spedycyjne i kurierskie umożliwiające bezpieczną oraz szybką dostawę w dowolne miejsce Polski oraz UE.</p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="red-rule-thin" style="position: absolute; bottom: 0; left: 0;"></div>
+    </section>
+
+    <!-- 3. GODZINY OTWARCIA (HOURS) SECTION -->
+    <section class="hours" id="godziny">
+      <div class="container">
+        
+        <div class="hours-grid">
+          
+          <div class="reveal-left">
+            <span class="section-label">GODZINY OTWARCIA</span>
+            <h2 class="hours-title">KIEDY JESTEŚMY DO TWOJEJ DYSPOZYCJI</h2>
+
+            <div class="hours-list">
+              
+              <div class="hours-row">
+                <span class="hours-day">Poniedziałek</span>
+                <span class="hours-term">08:00 – 17:00</span>
+              </div>
+
+              <div class="hours-row">
+                <span class="hours-day">Wtorek</span>
+                <span class="hours-term">08:00 – 17:00</span>
+              </div>
+
+              <div class="hours-row">
+                <span class="hours-day">Środa</span>
+                <span class="hours-term">08:00 – 17:00</span>
+              </div>
+
+              <div class="hours-row">
+                <span class="hours-day">Czwartek</span>
+                <span class="hours-term">08:00 – 17:00</span>
+              </div>
+
+              <div class="hours-row">
+                <span class="hours-day">Piątek</span>
+                <span class="hours-term">08:00 – 17:00</span>
+              </div>
+
+              <div class="hours-row">
+                <span class="hours-day">Sobota</span>
+                <span class="hours-term">09:00 – 14:00</span>
+              </div>
+
+              <div class="hours-row niedziela">
+                <span class="hours-day">Niedziela</span>
+                <span class="hours-term">ZAMKNIĘTE</span>
+              </div>
+
+            </div>
+
+            <div class="hours-notice">
+              <span class="hours-bullet-ping"></span>
+              <span>* Zamówienia internetowe i zapytania drogą mailową można składać przez 24h na dobę.</span>
+            </div>
+
+          </div>
+
+          <!-- Stamped location card on right -->
+          <div class="reveal-right">
+            <div class="hours-info-card">
+              <div>
+                <h4>DODATKOWE INFORMACJE</h4>
+                <p class="hours-info-text">
+                  Wszystkie produkty rzemieślnicze (paleniska Diamond, osprzęt rolniczy, rębaki) są wykonywane z dbałością o detale w naszym warsztacie w Stopnicy. Istnieje możliwość odbioru osobistego po wcześniejszym uzgodnieniu telefonicznym. Zapraszamy do kontaktu przed przyjazdem!
+                </p>
+              </div>
+
+              <div class="local-stamp">
+                <span class="local-stamp-title">STOPNICA</span>
+                <span class="local-stamp-sub">Lokalny lider usług wielobranżowych</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="red-rule-thin" style="position: absolute; bottom: 0; left: 0;"></div>
+    </section>
+
+    <!-- 4. OFERTY (PRODUCTS) SECTION -->
+    <section class="offers" id="oferty">
+      <div class="container">
+        
+        <div class="offers-head reveal">
+          <span class="section-label">AKTUALNE OFERTY</span>
+          <h2 class="offers-title">CO MAMY DLA CIEBIE</h2>
+          <div class="divider"></div>
+        </div>
+
+        <div class="offers-list">
+          
+          <!-- CARD 1: KOMINEK ELEKTRYCZNY KESSER -->
+          <div class="offer-card reveal">
+            <!-- Image left column -->
+            <div class="offer-visual">
+              <span class="offer-badge">SPRZEDAM</span>
+              <img src="https://i.ibb.co/20XbV86N/673643612-122128071447155709-2197965578781351707-n.jpg" alt="Kominek Elektryczny Kesser" class="offer-img" loading="lazy" referrerpolicy="no-referrer" />
+            </div>
+
+            <!-- Content right column -->
+            <div class="offer-details">
+              <div>
+                <div class="offer-top-row">
+                  <span class="offer-category">Wyposażenie Domu</span>
+                  <span class="offer-price">550 ZŁ</span>
+                </div>
+
+                <h3 class="offer-name">NOWY KOMINEK ELEKTRYCZNY KESSER</h3>
+                <p class="offer-description">
+                  Niezwykle efektowny, luksusowy kominek elektryczny marki Kesser. Produkt gwarantuje realistyczne odwzorowanie płomienia bez powstawania popiołu, dymu oraz sadzy. Idealny do salonu i sypialni. Wyposażony w zintegrowany termowentylator, regulację barwy ognia, a także pełne wsparcie dla sterowania głosem oraz aplikacją mobilną. Wyjątkowo prosty montaż ścienny.
+                </p>
+
+                {/* Grid specs info */}
+                <div class="offer-specs-grid">
+                  <div class="spec-item">
+                    <span class="spec-icon">⚡</span>
+                    <span><strong>Moc:</strong> 900W / 1800W</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-icon">📐</span>
+                    <span><strong>Wymiary:</strong> 48×138×18 cm</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-icon">🌡️</span>
+                    <span><strong>Temp:</strong> max 35°C</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-icon">⏱️</span>
+                    <span><strong>Timer:</strong> 24h progr.</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-icon">🎨</span>
+                    <span><strong>Kolor:</strong> 9 barw płom.</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-icon">📱</span>
+                    <span><strong>Ster:</strong> App/Alexa/Goog</span>
+                  </div>
+                </div>
+
+                <div class="offer-bullets">
+                  <div class="bullet-item">
+                    <span class="bullet-marker"></span>
+                    <span>Dwa stopnie grzania (900W oraz 1800W) pozwalają dopasować moc grzewczą do kubatury wnętrza.</span>
+                  </div>
+                  <div class="bullet-item">
+                    <span class="bullet-marker"></span>
+                    <span>Realistyczny, nastrojowy efekt płomienia 3D z łatwym wyborem 9 różnych barw podświetlenia LED.</span>
+                  </div>
+                  <div class="bullet-item">
+                    <span class="bullet-marker"></span>
+                    <span>Sterowanie za pomocą dotykowego szklanego panelu frontowego, pilota zdalnego oraz smartfona.</span>
+                  </div>
+                  <div class="bullet-item">
+                    <span class="bullet-marker"></span>
+                    <span>Szybki, bezpieczny i bezproblemowy montaż ścienny — wszystkie niezbędne elementy montażowe w zestawie.</span>
+                  </div>
+                </div>
+              </div>
+
+              <a href="mailto:info.nowator@gmail.com?subject=Zapytanie: Kominek KESSER&body=Dzień dobry,%0D%0Achcę zapytać o kominek elektryczny Kesser w cenie 550 zł." class="btn offer-cta-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                Zapytaj o produkt
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD 2: PALENISKO DIAMOND -->
+          <div class="offer-card reveal">
+            <!-- Image left column -->
+            <div class="offer-visual">
+              <span class="offer-badge">SPRZEDAM</span>
+              <img src="https://i.ibb.co/ds05FWPh/672649308-122127912969155709-6132212940311798766-n.jpg" alt="Palenisko Ogrodowe Diamond" class="offer-img" loading="lazy" referrerpolicy="no-referrer" />
+            </div>
+
+            <!-- Content right column -->
+            <div class="offer-details">
+              <div>
+                <div class="offer-top-row">
+                  <span class="offer-category">Ogród i Rekreacja</span>
+                  <span class="offer-price">450 ZŁ</span>
+                </div>
+
+                <h3 class="offer-name">SOLIDNE PALENISKO OGRODOWE DIAMOND</h3>
+                <p class="offer-description">
+                  Pancerne palenisko do ogrodu i na taras, charakteryzujące się nowoczesnym, geometrycznym kształtem diamentu. Wykonane z grubej, trwałej i w pełni atestowanej stali o grubości 3 mm. Pofrezowane i spawane laserowo. Obustronnie pomalowane profesjonalną, czarno-matową farbą silikonową odporną na ekstremalny żar do 600°C.
+                </p>
+
+                {/* Grid specs info */}
+                <div class="offer-specs-grid">
+                  <div class="spec-item">
+                    <span class="spec-icon">📐</span>
+                    <span><strong>Wymiary:</strong> 60×65 cm</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-icon">🔩</span>
+                    <span><strong>Stal:</strong> Grubość 3 mm</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-icon">⚖️</span>
+                    <span><strong>Masa:</strong> Ok. 17 kg</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-icon">🌡️</span>
+                    <span><strong>Farba:</strong> żaroodp. 600°C</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-icon">🎨</span>
+                    <span><strong>Kolor:</strong> Czarny mat</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-icon">📦</span>
+                    <span><strong>Wysyłka:</strong> Cała Polska/UE</span>
+                  </div>
+                </div>
+
+                <div class="offer-bullets">
+                  <div class="bullet-item">
+                    <span class="bullet-marker"></span>
+                    <span>Wzmocniona konstrukcja ze stali 3 mm gwarantuje, że misa nie odgina się i nie wykrzywia od temperatur ogniska.</span>
+                  </div>
+                  <div class="bullet-item">
+                    <span class="bullet-marker"></span>
+                    <span>Głębokie dno diamentu zabezpiecza żar i popiół przed nagłymi porywami wiatru, dbając o bezpieczeństwo.</span>
+                  </div>
+                  <div class="bullet-item">
+                    <span class="bullet-marker"></span>
+                    <span>Estetyczna, prostopadłościenna forma stanowi wyjątkowo stylowy element tarasowo-architektoniczny.</span>
+                  </div>
+                  <div class="bullet-item">
+                    <span class="bullet-marker"></span>
+                    <span>Bezpieczne, gładko oszlifowane ranty oraz solidnie przyspawane stabilizacyjne nóżki konstrukcyjne.</span>
+                  </div>
+                </div>
+              </div>
+
+              <a href="mailto:info.nowator@gmail.com?subject=Zapytanie: Palenisko Diamond&body=Dzień dobry,%0D%0Achcę kupić palenisko Diamond ze stali 3mm w cenie 450 zł." class="btn offer-cta-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                Zapytaj o produkt
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD 3: MECHANIZMY TNĄCE (VANILLA CAROUSEL IMAGE) -->
+          <div class="offer-card reveal">
+            <!-- Active Image left column Carousel -->
+            <div class="offer-visual">
+              <span class="offer-badge" style="background-color: var(--black); border: 2px solid var(--red);">SPRZEDAM / NA ZAMÓWIENIE</span>
+              
+              <!-- Wrapper container for active script carousel -->
+              <div class="carousel-container" id="industrial-carousel">
+                <div class="carousel-slide-wrapper">
+                  <div class="carousel-slide active">
+                    <img src="https://i.ibb.co/4ZyP42cv/671108730-122126973867155709-519754208804556743-n.jpg" alt="Mechanizm tnący wrzecionowy - Nowator" loading="lazy" referrerpolicy="no-referrer" />
+                  </div>
+                  <div class="carousel-slide">
+                    <img src="https://i.ibb.co/TBPBmBrH/670836534-122126973909155709-7602311944725929567-n.jpg" alt="Podzespoły maszyn leśnych - Nowator" loading="lazy" referrerpolicy="no-referrer" />
+                  </div>
+                  <div class="carousel-slide">
+                    <img src="https://i.ibb.co/9kHr5jdK/671215814-122126973837155709-7553819107943154702-n.jpg" alt="Precyzyjne noże i wały - Nowator" loading="lazy" referrerpolicy="no-referrer" />
+                  </div>
+                </div>
+
+                <!-- Navigation Chevrons -->
+                <button class="carousel-arrow prev" id="carousel-prev-btn" aria-label="Poprzedni slajd">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button class="carousel-arrow next" id="carousel-next-btn" aria-label="Następny slajd">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+
+                <!-- Navigation Dots -->
+                <div class="carousel-dots" id="carousel-dots-wrap">
+                  <span class="carousel-dot active" data-slide-index="0"></span>
+                  <span class="carousel-dot" data-slide-index="1"></span>
+                  <span class="carousel-dot" data-slide-index="2"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content right column -->
+            <div class="offer-details">
+              <div>
+                <div class="offer-top-row">
+                  <span class="offer-category">Rolnictwo i Maszyny Leśne</span>
+                  <span class="offer-price variable">WYCENA INDYWIDUALNA</span>
+                </div>
+
+                <h3 class="offer-name">MECHANIZMY TNĄCE, ŚWIDRY I NOŻE — NA ZAMÓWIENIE</h3>
+                <span class="offer-subname">Podzespoły do maszyn rolniczych i leśnych</span>
+                <p class="offer-description">
+                  Produkcja i precyzyjne odtwarzanie podzespołów eksploatacyjnych maszyn. Specjalizujemy się w elementach hartowanych, tnących i mielących narażonych na zniekształcenia konstrukcyjne. Korzystamy ze stali utwardzanej i stopowej, stawiając na najwyższą precyzję wykonania elementów toczonych oraz spawanych.
+                </p>
+
+                <h4 class="section-label" style="color: var(--black); font-size: 0.8rem; margin-bottom: 12px; font-weight: 900;">CO MOŻESZ U NAS ZAMÓWIĆ:</h4>
+                
+                <div class="offer-bullets">
+                  <div class="bullet-item">
+                    <span class="bullet-marker"></span>
+                    <span><strong>Mechanizmy tnące do rębaków i rozdrabniaczy</strong> — do przerobu gałęzi leśnych o grubości do 12 cm.</span>
+                  </div>
+                  <div class="bullet-item">
+                    <span class="bullet-marker"></span>
+                    <span><strong>Świdry stożkowe, głowice oraz wałki</strong> — do łuparek świdrowych i urządzeń do rozłupywania kloców drewna.</span>
+                  </div>
+                  <div class="bullet-item">
+                    <span class="bullet-marker"></span>
+                    <span><strong>Noże do rębaków i rozdrabniaczy leśnych</strong> — produkowane ze stopowej stali narzędziowej o wysokiej odporności.</span>
+                  </div>
+                  <div class="bullet-item">
+                    <span class="bullet-marker"></span>
+                    <span><strong>Wałki napędowe do gniotowników i zgniataczy ziarna</strong> — precyzyjnie wyważone z nacięciami wg specyfikacji.</span>
+                  </div>
+                </div>
+
+                <div class="package-notice">
+                  <span class="package-notice-title">SZYBKO I NA TERENIE CAŁEJ POLSKI:</span>
+                  <p class="package-notice-text">🚚 Gwarantujemy sprawną realizację zamówienia i bezpieczną przesyłkę paletową pod dowolny polski i europejski adres.</p>
+                </div>
+              </div>
+
+              <a href="mailto:info.nowator@gmail.com?subject=Zapytanie: Mechanizmy tnące&body=Dzień dobry,%0D%0Achcę skierować zapytanie o wycenę mechanizmów tnących lub osprzętu. Moje zapotrzebowanie oraz parametry elementów są następujące: " class="btn offer-cta-btn" style="background-color: var(--red); color: var(--white);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                Zapytaj o wycenę
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="red-rule-thin" style="margin-top: 60px;"></div>
+      </div>
+    </section>
+
+    <!-- 5. KONTAKT (CONTACT) SECTION -->
+    <section class="contact" id="kontakt">
+      <div class="container">
+        
+        <div class="contact-grid">
+          
+          <!-- Column 1: Details & Social handles -->
+          <div class="reveal-left">
+            <span class="section-label">KONTAKT</span>
+            <h2 class="contact-title">ZNAJDZIESZ NAS TUTAJ</h2>
+
+            <div class="contact-list">
+              
+              <div class="contact-item">
+                <div class="contact-icon-box">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                </div>
+                <div>
+                  <span class="contact-item-label">Siedziba i warsztat</span>
+                  <span class="contact-item-value">Tadeusza Kościuszki 66,<br /> Stopnica 28-130</span>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon-box" style="animation: pulse 2s infinite;">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                </div>
+                <div>
+                  <span class="contact-item-label">Zadzwoń bezpośrednio</span>
+                  <a href="tel:606502642" class="contact-item-phone">606 502 642</a>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon-box">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </div>
+                <div>
+                  <span class="contact-item-label">Napisz do nas</span>
+                  <a href="mailto:info.nowator@gmail.com" class="contact-item-email">info.nowator@gmail.com</a>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Social accounts stacked -->
+            <div class="social-block">
+              <span class="social-label">PRODUKCJA WIDEO I PROFILE</span>
+              <div class="social-buttons">
+                
+                <a href="https://www.facebook.com/Nowatorstopnica/" target="_blank" rel="noreferrer noopener" class="social-btn facebook">
+                  <span class="social-icon-inner">
+                    <span class="social-symbol">f</span>
+                    <span>Facebook • Nowator Stopnica</span>
+                  </span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+
+                <a href="https://www.youtube.com/@nowatorpolska" target="_blank" rel="noreferrer noopener" class="social-btn youtube">
+                  <span class="social-icon-inner">
+                    <span class="social-symbol">▶</span>
+                    <span>YouTube • Nowator Polska</span>
+                  </span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Column 2: Hours overview -->
+          <div class="reveal">
+            <span class="contact-hours-title">GODZINY PRACY BIURA</span>
+            <div class="contact-hours-table">
+              
+              <div class="contact-hours-item">
+                <span class="contact-day">Pon. – Pt.</span>
+                <span class="contact-time">08:00 – 17:00</span>
+              </div>
+
+              <div class="contact-hours-item">
+                <span class="contact-day">Sobota</span>
+                <span class="contact-time">09:00 – 14:00</span>
+              </div>
+
+              <div class="contact-hours-item closed">
+                <span class="contact-day">Niedziela</span>
+                <span class="contact-time">ZAMKNIĘTE</span>
+              </div>
+
+            </div>
+            
+            <p style="font-size: 0.8rem; color: var(--gray); line-height: 1.6;">
+              Zapraszamy do wysyłania zapytań o darmową wycenę oraz porady techniczne o każdej porze. Odpowiadamy jak najszybciej, starając się doradzić optymalne gatunki stali oraz rozwiązania do rębaka, a także kominka.
+            </p>
+          </div>
+
+          <!-- Column 3: Embedded Google Maps in deep industrial theme with grayscale inversion -->
+          <div class="reveal-right">
+            <div class="map-wrapper shadow-2xl">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2541.0566738976245!2d20.949567158122232!3d50.44004501509096!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4717de19fb1daaab%3A0xa8693eca26f32fe6!2sTadeusza%20Ko%C5%9Bciuszki%2066%2C%2028-130%20Stopnica!5e0!3m2!1spl!2spl!4v1781251704089!5m2!1spl!2spl" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Siedziba Nowator Stopnica Kościuszki 66"
+              ></iframe>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- --- FOOTER --- -->
+    <footer class="footer">
+      <div class="container">
+        
+        <div class="footer-main">
+          
+          <div class="footer-brand">
+            <h4>NOWATOR</h4>
+            <p>Usługi Wielobranżowe i Produkcja Rzemieślnicza.</p>
+            <p style="margin-top: 8px;">Tadeusza Kościuszki66, Stopnica 28-130</p>
+          </div>
+
+          <div class="footer-nav">
+            <span class="footer-nav-title font-heading">Menu Główne</span>
+            <div class="footer-links-grid">
+              <a href="#o-firmie" class="footer-link-a">O Firmie</a>
+              <a href="#godziny" class="footer-link-a">Godziny</a>
+              <a href="#oferty" class="footer-link-a">Nasze Oferty</a>
+              <a href="#kontakt" class="footer-link-a">Kontakt</a>
+              <a href="https://www.facebook.com/Nowatorstopnica/" target="_blank" rel="noreferrer noopener" class="footer-link-a">Facebook</a>
+              <a href="https://www.youtube.com/@nowatorpolska" target="_blank" rel="noreferrer noopener" class="footer-link-a">YouTube</a>
+            </div>
+          </div>
+
+          <div class="footer-contact-info">
+            <span class="footer-nav-title font-heading">Skontaktuj Się</span>
+            <a href="tel:606502642" class="footer-contact-phone">606 502 642</a>
+            <a href="mailto:info.nowator@gmail.com" class="footer-contact-email">info.nowator@gmail.com</a>
+          </div>
+
+        </div>
+
+        <div class="footer-bottom">
+          <span class="copyright">
+            &copy; 2026 Nowator Usługi Wielobranżowe | Tadeusza Kościuszki 66, 28-130 Stopnica
+          </span>
+          <span class="credits">
+            Aesthetic Swiss-Industrial Edition
+          </span>
+        </div>
+
+      </div>
+    </footer>
+
+    <!-- --- JAVASCRIPT --- -->
+    <script>
+      // --- MOBILE NAVIGATION BAR SWITCH SYSTEM ---
+      const hamburgerBtn = document.getElementById('hamburger-btn');
+      const mobileCloseBtn = document.getElementById('mobile-close-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileLinks = document.querySelectorAll('[data-link]');
+
+      const toggleMenu = (open) => {
+        if (open) {
+          mobileMenu.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        } else {
+          mobileMenu.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      };
+
+      if (hamburgerBtn) hamburgerBtn.addEventListener('click', () => toggleMenu(true));
+      if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', () => toggleMenu(false));
+      
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href').substring(1);
+          const targetSection = document.getElementById(targetId);
+          toggleMenu(false);
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      // --- STICKY NAV SYSTEM ON SCROLL ---
+      const navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 60) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+
+      // --- INTERSECTION REVEAL SYSTEMS ---
+      const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+      const revealOnScroll = () => {
+        const triggerBottom = window.innerHeight * 0.92;
+        revealElements.forEach(el => {
+          const elTop = el.getBoundingClientRect().top;
+          if (elTop < triggerBottom) {
+            el.classList.add('active');
+          }
+        });
+      };
+      
+      window.addEventListener('scroll', revealOnScroll);
+      window.addEventListener('load', revealOnScroll);
+
+      // --- CLIENT CAROUSEL CONTROLS FOR INDUSTIAL SLIDER (CARD 3) ---
+      const slides = document.querySelectorAll('#industrial-carousel .carousel-slide');
+      const prevBtn = document.getElementById('carousel-prev-btn');
+      const nextBtn = document.getElementById('carousel-next-btn');
+      const dotsWrap = document.getElementById('carousel-dots-wrap');
+      
+      let currentSlide = 0;
+      let autoplayTimer = null;
+      const autoplayDelay = 4000;
+
+      const renderSlide = (index) => {
+        slides.forEach((slide, i) => {
+          if (i === index) {
+            slide.classList.add('active');
+          } else {
+            slide.classList.remove('active');
+          }
+        });
+
+        // Sync dots
+        const dots = dotsWrap.querySelectorAll('.carousel-dot');
+        dots.forEach((dot, i) => {
+          if (i === index) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+        currentSlide = index;
+      };
+
+      const nextSlide = () => {
+        let index = currentSlide + 1;
+        if (index >= slides.length) index = 0;
+        renderSlide(index);
+      };
+
+      const prevSlide = () => {
+        let index = currentSlide - 1;
+        if (index < 0) index = slides.length - 1;
+        renderSlide(index);
+      };
+
+      const startAutoplay = () => {
+        autoplayTimer = setInterval(nextSlide, autoplayDelay);
+      };
+
+      const stopAutoplay = () => {
+        if (autoplayTimer) {
+          clearInterval(autoplayTimer);
+          autoplayTimer = null;
+        }
+      };
+
+      // Set carousel event listeners
+      if (prevBtn) prevBtn.addEventListener('click', () => {
+        stopAutoplay();
+        prevSlide();
+        startAutoplay();
+      });
+
+      if (nextBtn) nextBtn.addEventListener('click', () => {
+        stopAutoplay();
+        nextSlide();
+        startAutoplay();
+      });
+
+      // Setup dots trigger
+      if (dotsWrap) {
+        const dots = dotsWrap.querySelectorAll('.carousel-dot');
+        dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            stopAutoplay();
+            renderSlide(index);
+            startAutoplay();
+          });
+        });
+      }
+
+      // Pause autoplay on cursor hover and resume
+      const carouselContainer = document.getElementById('industrial-carousel');
+      if (carouselContainer) {
+        carouselContainer.addEventListener('mouseenter', stopAutoplay);
+        carouselContainer.addEventListener('mouseleave', startAutoplay);
+      }
+
+      // Kickoff autoplay timer
+      startAutoplay();
+    </script>
+    
   </body>
 </html>
-
