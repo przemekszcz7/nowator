@@ -1,0 +1,6 @@
+{
+  "name": "Nowator Usługi Wielobranżowe",
+  "description": "Polskie przedsiębiorstwo wielobranżowe z siedzibą w Stopnicy - kominki, paleniska ogrodowe, mechanizmy tnące i podzespoły maszyn.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
